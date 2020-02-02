@@ -13,8 +13,15 @@ jobs:
     steps:
     - uses: actions/checkout@master
       
-    - name: list files
+    - name: Get changed files for PR
+      id: get-files
       run: |
         URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
         FILES=$(curl -s -X GET -G $URL | jq -r '.[] | .filename')
-        echo $FILES
+        echo ::set-output name=FILES::$FILES
+        
+    - name: Validate file paths
+      id: validate-files
+      run: |
+         export FILES=${{ steps.get-files.outputs.FILES }}
+         echo $FILES
