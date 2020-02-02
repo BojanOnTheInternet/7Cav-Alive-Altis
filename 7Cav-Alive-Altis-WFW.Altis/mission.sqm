@@ -1,4 +1,4 @@
-version=53;
+vsersion=53;
 class EditorData
 {
 	moveGridStep=0.125;
