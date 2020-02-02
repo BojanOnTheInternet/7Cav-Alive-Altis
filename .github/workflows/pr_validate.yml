@@ -17,11 +17,9 @@ jobs:
       id: get-files
       run: |
         URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
-        FILES=$(curl -s -X GET -G $URL | jq -r '.[] | .filename')
-        echo ::set-output name=FILES::$FILES
+        curl -s -X GET -G $URL | jq -r '.[] | .filename' > files.txt
         
     - name: Validate file paths
       id: validate-files
       run: |
-         echo ${{ steps.get-files.outputs.FILES }}
-         echo $FILES
+        exit $(grep '7Cav-Alive' files.txt | grep -v '7Cav-Alive-Altis.Altis/' | wc -l)
