@@ -19,9 +19,8 @@ jobs:
       run: |
         URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
         curl -s -X GET -G $URL | jq -r '.[] | .filename' > files.txt
-        grep '7Cav-Alive' files.txt | grep -v '7Cav-Alive-Altis.Altis/' | grep -v 'mission.sqm' > bad_files.txt
+        grep '7Cav-Alive' files.txt | grep -v '7Cav-Alive.Altis/' | grep -v 'mission.sqm' > bad_files.txt
         echo ::set-output name=COUNT::$(wc -l < bad_files.txt)
-
     - name: Create error message
       run: |
         if (( ${{ steps.get-files.outputs.COUNT }} > 0 )); then
@@ -30,7 +29,6 @@ jobs:
         $(cat bad_files.txt)
         ~~~" > message.txt
         fi
-
     - name: Add commit comment
       run: |
         if (( ${{ steps.get-files.outputs.COUNT }} > 0 )); then
@@ -45,4 +43,3 @@ jobs:
       id: exit
       run: |
         exit ${{ steps.get-files.outputs.COUNT }}
-    

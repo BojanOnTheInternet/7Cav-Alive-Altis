@@ -24,7 +24,7 @@ jobs:
       id: build
       run: |
         FILENAME=7Cav_FullSpectrum_$VERSION.zip
-        VERSION=`cat 7Cav-Alive-Altis.Altis/description.ext  | grep -o 'onLoadName = ".*"' | grep -o 'v[0-9.][0-9.]*'`
+        VERSION=`cat 7Cav-Alive.Altis/description.ext  | grep -o 'onLoadName = ".*"' | grep -o 'v[0-9.][0-9.]*'`
         echo ::set-output name=VERSION::$VERSION
         echo ::set-output name=FILENAME::$FILENAME
         
@@ -32,16 +32,15 @@ jobs:
           if [ -d "${D}"]; then
             cd $d
               echo "Attempting build for $d"
-              VERSION=`cat description.ext  | grep -o 'onLoadName = ".*"' | grep -o 'v[0-9.][0-9.]*'`
+              NAME=`echo $d | cut -f 1 -d '.'`
               MAP=`echo $d | grep -Po '\.(.*)' | tr -d ./`
-              armake build -w unquoted-string -w redefinition-wo-undef -w excessive-concatenation -x ".*" -x "*.pbo" -x "*.md" . ../7Cav_FullSpectrum_$VERSION.$MAP.pbo
+              armake build -w unquoted-string -w redefinition-wo-undef -w excessive-concatenation -x ".*" -x "*.pbo" -x "*.md" . ../$NAME-$VERSION.$MAP.pbo
               echo "Built $d"
             cd ..  
           fi
         done
         
         zip $FILENAME *.pbo
-
     - name: Create Release
       id: create_release
       uses: actions/create-release@master
