@@ -33,7 +33,7 @@ jobs:
     - name: Add commit comment
       run: |
         if (( ${{ steps.get-files.outputs.COUNT }} > 0 )); then
-          echo "{'body': $(cat message.txt)}" | \
+          jq -nc '{"body": $MSG}' --arg MSG "`cat message.txt`" | \
           curl -sL  -X POST -d @- \
             -H "Content-Type: application/json" \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
