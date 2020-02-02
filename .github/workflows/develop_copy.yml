@@ -12,12 +12,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@master
-    - name: Changed Files Exporter
-      uses: futuratrepadeira/changed-files@v3.0.0
+    - name: Get Changed Files
+      uses: lots0logs/gh-action-get-changed-files@2.0.5
       with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        # GitHub Personal Access Token
+        token: ${{ secrets.GITHUB_TOKEN }}
+
     
     - name: Copy files
       id: copy
       run: |
-        cat $files_updated
+        cat ${HOME}/files.json
