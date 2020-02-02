@@ -18,8 +18,30 @@ jobs:
       run: |
         URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
         curl -s -X GET -G $URL | jq -r '.[] | .filename' > files.txt
-        
-    - name: Validate file paths
-      id: validate-files
+        grep '7Cav-Alive' files.txt | grep -v '7Cav-Alive-Altis.Altis/' > bad_files.txt
+        echo ::set-output name=COUNT::$(wc -l < bad_files.txt)
+
+    - name: Create error message
       run: |
-        exit $(grep '7Cav-Alive' files.txt | grep -v '7Cav-Alive-Altis.Altis/' | wc -l)
+        if (( ${{ steps.get-files.outputs.COUNT }} > 0 )); then
+        echo "${{ steps.get-files.outputs.COUNT }} invalid file(s) found. You may not commit these files:
+        ~~~
+        $(cat bad_files.txt)
+        ~~~" > message.txt
+        fi
+
+    - name: Add commit comment
+      run: |
+        if (( ${{ steps.get-files.outputs.COUNT }} > 0 )); then
+          jq -nc '{"body": $(cat message.txt)}' | \
+          curl -sL  -X POST -d @- \
+            -H "Content-Type: application/json" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/comments"
+        fi
+          
+    - name: Exit with code
+    id: exit
+    run: |
+      exit ${{ steps.get-files.outputs.COUNT }}
+    
