@@ -35,6 +35,8 @@ jobs:
             fi
           fi
         done
+        git add .
+        git commit -m "Copy files from commit: $GITHUB_SHA"
         
     - name: Push updated files
       uses: ad-m/github-push-action@v0.5.0
