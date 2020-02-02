@@ -1,4 +1,4 @@
-name: Test All PBOs Builds
+name: Test All PBOs Build
 
 on:
   pull_request:
@@ -25,11 +25,16 @@ jobs:
         for d in *7Cav*/; do
           if [ -d "${D}"]; then
             cd $d
+              echo "Copying files for $d"
+              ls -d $d/* | grep -v "mission.sqm" | xargs rm -rf
+              ls -d ./7Cav-Alive-Altis.Altis/* | grep -v "mission.sqm" | xargs -I '{}' cp -r '{}' ./$d
+
+              echo "Attempting build for $d"
               VERSION=`cat description.ext  | grep -o 'onLoadName = ".*"' | grep -o 'v[0-9.][0-9.]*'`
               FILENAME=7Cav_FullSpectrum_$VERSION.Altis.pbo
               MAP=`echo $d | grep -Po '\.(.*)' | tr -d ./`
               armake build -w unquoted-string -w redefinition-wo-undef -w excessive-concatenation -x ".*" -x "*.pbo" -x "*.md" . 7Cav_FullSpectrum_$VERSION.$MAP.pbo
-              ls -la
+              echo "Built $d"
             cd ..  
           fi
         done
