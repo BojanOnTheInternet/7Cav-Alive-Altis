@@ -1,5 +1,6 @@
 diag_log "initPlayerLocal start";
 
+
 // Headless client
 if (not hasInterface) exitWith
 {
