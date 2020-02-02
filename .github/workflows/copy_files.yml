@@ -19,7 +19,7 @@ jobs:
       with:
         access-token: ${{ secrets.ACCESS_TOKEN }}
         branch: develop
-        enforce_admins: disable
+        enforce_admins: false
       
     - name: Copy main repository files
       id: get-files
@@ -49,4 +49,4 @@ jobs:
       with:
         access-token: ${{ secrets.ACCESS_TOKEN }}
         branch: develop
-        enforce_admins: enable
+        enforce_admins: true
