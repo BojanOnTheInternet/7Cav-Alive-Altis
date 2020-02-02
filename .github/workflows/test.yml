@@ -1,9 +1,9 @@
-name: CI
+name: Test All PBOs Builds
 
 on:
   pull_request:
     branches:
-    - master
+    - develop
 
 jobs:
   build:
@@ -12,12 +12,24 @@ jobs:
 
     steps:
     - uses: actions/checkout@master
-    - name: Build PBO
-      id: build
+    - name: Build PBOs
+      id: install
       run: |
         sudo add-apt-repository ppa:koffeinflummi/armake -y  || exit 0
         sudo apt-get update -y  || exit 0
         sudo apt-get install armake -y  || exit 0
-        export VERSION=`cat description.ext  | grep -o 'onLoadName = ".*"' | grep -o 'v[0-9.][0-9.]*'`
-        export FILENAME=7Cav_FullSpectrum_$VERSION.Altis.pbo
-        armake build -w unquoted-string -w redefinition-wo-undef -w excessive-concatenation -x ".*" -x "*.pbo" -x "*.md" . 7Cav_FullSpectrum_$VERSION.Altis.pbo
+
+    - name: Build PBOs
+      id: build
+      run: |
+        for d in *7Cav*/; do
+          if [ -d "${D}"]; then
+            cd $d
+              VERSION=`cat description.ext  | grep -o 'onLoadName = ".*"' | grep -o 'v[0-9.][0-9.]*'`
+              FILENAME=7Cav_FullSpectrum_$VERSION.Altis.pbo
+              MAP=`echo $d | grep -Po '\.(.*)' | tr -d ./`
+              armake build -w unquoted-string -w redefinition-wo-undef -w excessive-concatenation -x ".*" -x "*.pbo" -x "*.md" . 7Cav_FullSpectrum_$VERSION.$MAP.pbo
+              ls -la
+            cd ..  
+          fi
+        done
