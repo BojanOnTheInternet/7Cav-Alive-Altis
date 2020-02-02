@@ -33,6 +33,8 @@ jobs:
             fi
           fi
         done
+        git config --global user.email "bojan@live.ca"
+        git config --global user.name "BojanOnTheInternet"
         
     - name: publish-to-git
       uses: seanmiddleditch/gha-publish-to-git@v1
@@ -40,7 +42,6 @@ jobs:
         branch: develop
         github_token: ${{ secrets.GITHUB_TOKEN }}
         github_pat: ${{ secrets.ACCESS_KEY }}
-        commit_author: 'bojan@live.ca'
             
     - name: Push updated files
       uses: ad-m/github-push-action@v0.5.0
