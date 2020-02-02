@@ -17,17 +17,8 @@ jobs:
       id: get-files
       run: |
         URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
-        echo $URL
         curl -s -X GET -G $URL | jq -r '.[] | .filename' > files.txt
-        cat files.txt
-        echo "---"
-        grep '7Cav-Alive' files.txt 
-        echo "+++"
-        grep '7Cav-Alive' files.txt | grep -v '7Cav-Alive-Altis.Altis/'
-        echo "///"
-        grep '7Cav-Alive' files.txt | grep -v '7Cav-Alive-Altis.Altis/' > bad_files.txt
-        wc -l files.txt
-        wc -l bad_files.txt
+        grep -q '7Cav-Alive' files.txt | grep -vq '7Cav-Alive-Altis.Altis/' > bad_files.txt
         echo ::set-output name=COUNT::$(wc -l < bad_files.txt)
 
     - name: Create error message
