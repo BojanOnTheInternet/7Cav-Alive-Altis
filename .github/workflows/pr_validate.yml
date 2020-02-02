@@ -41,7 +41,7 @@ jobs:
         fi
           
     - name: Exit with code
-    id: exit
-    run: |
-      exit ${{ steps.get-files.outputs.COUNT }}
+      id: exit
+      run: |
+        exit ${{ steps.get-files.outputs.COUNT }}
     
