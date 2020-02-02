@@ -25,8 +25,11 @@ jobs:
         for d in *7Cav*/; do
           if [ -d "${D}"]; then
             echo "Copying files for $d"
-            ls -d $d/* | grep -v "mission.sqm" | xargs rm -rf
-            ls -d ./7Cav-Alive-Altis.Altis/* | grep -v "mission.sqm" | xargs -I '{}' cp -r '{}' ./$d
+            if [ $d != "7Cav-Alive-Altis.Altis/" ]; then
+              echo "Starting to process $d"
+              ls -d $d/* | grep -v "mission.sqm" | xargs rm -rf
+              ls -d ./7Cav-Alive-Altis.Altis/* | grep -v "mission.sqm" | xargs -I '{}' cp -r '{}' ./$d
+            fi
 
             cd $d
               echo "Attempting build for $d"
