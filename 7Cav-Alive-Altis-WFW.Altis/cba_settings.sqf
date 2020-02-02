@@ -18,6 +18,7 @@ force force ace_advanced_fatigue_terrainGradientFactor = 1;
  
 // ACE Advanced Throwing
 force force ace_advanced_throwing_enabled = true;
+something;
 force force ace_advanced_throwing_enablePickUp = true;
 force force ace_advanced_throwing_enablePickUpAttached = true;
 force force ace_advanced_throwing_showMouseControls = true;
