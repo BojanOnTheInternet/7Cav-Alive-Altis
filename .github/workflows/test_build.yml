@@ -18,7 +18,6 @@ jobs:
         sudo add-apt-repository ppa:koffeinflummi/armake -y  || exit 0
         sudo apt-get update -y  || exit 0
         sudo apt-get install armake -y  || exit 0
-
     - name: Build PBOs
       id: build
       run: |
@@ -30,7 +29,6 @@ jobs:
               ls -d $d/* | grep -v "mission.sqm" | xargs rm -rf
               ls -d ./7Cav-Alive.Altis/* | grep -v "mission.sqm" | xargs -I '{}' cp -r '{}' ./$d
             fi
-
             cd $d
               echo "Attempting build for $d"
               VERSION=`cat description.ext  | grep -o 'onLoadName = ".*"' | grep -o 'v[0-9.][0-9.]*'`
