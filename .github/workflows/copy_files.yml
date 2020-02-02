@@ -17,7 +17,7 @@ jobs:
       uses: benjefferies/branch-protection-bot@1.0.2
       if: always() 
       with:
-        access-token: ${{ secrets.ACCESS_TOKEN }}
+        access-token: ${{ secrets.ACCESS_KEY }}
         branch: develop
         enforce_admins: false
       
@@ -47,6 +47,6 @@ jobs:
       uses: benjefferies/branch-protection-bot@1.0.2
       if: always() 
       with:
-        access-token: ${{ secrets.ACCESS_TOKEN }}
+        access-token: ${{ secrets.ACCESS_KEY }}
         branch: develop
         enforce_admins: true
