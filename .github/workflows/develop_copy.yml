@@ -14,7 +14,9 @@ jobs:
     - uses: actions/checkout@master
     - name: Changed Files Exporter
       uses: futuratrepadeira/changed-files@v3.0.0
-
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+    
     - name: Copy files
       id: copy
       run: |
