@@ -1,0 +1,21 @@
+name: Copy Altis to All
+
+on:
+  push:
+    branches: 
+      - develop
+
+jobs:
+  build:
+    name: Copy Script Files to All Missions
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+    - name: Changed Files Exporter
+      uses: futuratrepadeira/changed-files@v3.0.0
+
+    - name: Copy files
+      id: copy
+      run: |
+        cat $files_updated
