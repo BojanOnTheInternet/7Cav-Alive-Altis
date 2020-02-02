@@ -33,10 +33,13 @@ jobs:
             fi
           fi
         done
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add .
-        git commit -m "Copy files from commit: $GITHUB_SHA"
+        
+    - name: publish-to-git
+      uses: seanmiddleditch/gha-publish-to-git@v1
+      with:
+        branch: develop
+        github_token: ${{ secrets.GITHUB_TOKEN)
+        github_pat: ${{ secrets.ACCESS_KEY }}
         
     - name: Push updated files
       uses: ad-m/github-push-action@v0.5.0
