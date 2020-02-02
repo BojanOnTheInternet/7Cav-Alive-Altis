@@ -1,0 +1,20 @@
+name: Validate Pull Request
+
+on:
+  pull_request:
+    branches: 
+      - develop
+
+jobs:
+  build:
+    name: Scan for invalid file changes
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+      
+    - name: list files
+      run: |
+        URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
+        FILES=$(curl -s -X GET -G $URL | jq -r '.[] | .filename')
+        echo $FILES
