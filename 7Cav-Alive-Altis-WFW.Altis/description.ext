@@ -6,7 +6,7 @@ overviewPicture = "";
 
 briefing = 0;
 debriefing = 0;
-
+ss
 // Rules
 cba_settings_hasSettingsFile = 1;
 disabledAI = true;
