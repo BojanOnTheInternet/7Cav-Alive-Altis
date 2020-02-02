@@ -9,7 +9,7 @@ missionNamespace setVariable["LOYALTY_CIPHER", CIPHERSECRETKEY, true];
 RHS_ENGINE_STARTUP_OFF = 1;
 
 // Increase ACE max carry and drag weights
-ACE_maxWeightCarry = 7501;
+ACE_maxWeightCarry = 750;
 ACE_maxWeightDrag = 1000;
 
 // Make sure armed civilians won't attack NATO
