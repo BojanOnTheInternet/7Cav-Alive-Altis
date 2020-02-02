@@ -35,13 +35,12 @@ jobs:
             fi
           fi
         done
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git checkout develop
-        git pull
-        git add .
-        git commit -m "Copy files from commit: $GITHUB_SHA"
-        git push --set-upstream origin develop
+        
+    - name: Push updated files
+      uses: ad-m/github-push-action@v0.5.0
+      with:
+        github_token: ${{ secrets.ACCESS_KEY }}
+        branch: develop
         
     - name: Enable Admin Protection
       uses: benjefferies/branch-protection-bot@1.0.2
