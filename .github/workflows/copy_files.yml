@@ -1,5 +1,3 @@
-name: Copy Files
-
 on:
   push:
     branches: 
@@ -28,9 +26,10 @@ jobs:
           fi
         done
         git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
+        git config --local user.name "Repository Copy Bot"
         git checkout develop
         git pull
         git add .
         git commit -m "Copy files from commit: $GITHUB_SHA"
         git push --set-upstream origin develop
+        

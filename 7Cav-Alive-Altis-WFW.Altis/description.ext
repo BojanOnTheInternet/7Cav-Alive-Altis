@@ -3,7 +3,7 @@ onLoadMission = "Welcome to 7th Cavalry Tactical Realism! Join us on TeamSpeak a
 author = "7th Cavalry Regiment!";
 loadScreen = "media\images\MissionLogo.paa";
 overviewPicture = "";
-
+bad;
 briefing = 0;
 debriefing = 0;
 
