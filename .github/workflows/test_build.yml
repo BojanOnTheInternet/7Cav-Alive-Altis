@@ -34,7 +34,6 @@ jobs:
             cd $d
               echo "Attempting build for $d"
               VERSION=`cat description.ext  | grep -o 'onLoadName = ".*"' | grep -o 'v[0-9.][0-9.]*'`
-              FILENAME=7Cav_FullSpectrum_$VERSION.Altis.pbo
               MAP=`echo $d | grep -Po '\.(.*)' | tr -d ./`
               armake build -w unquoted-string -w redefinition-wo-undef -w excessive-concatenation -x ".*" -x "*.pbo" -x "*.md" . 7Cav_FullSpectrum_$VERSION.$MAP.pbo
               echo "Built $d"
